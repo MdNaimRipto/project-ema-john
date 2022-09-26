@@ -2,8 +2,38 @@
     background-color: #FFE0B3;
     width: 16rem;
     height: 45rem;
+    position: sticky;
+    top: 0;
+}
+
+.cart button {
+    display: block;
+    margin: auto;
+    padding: 10px 0px;
+    width: 80%;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+}
+
+.cart button span {
+    margin-right: 8px;
 }
 
 .cart-header {
     text-align: center;
+}
+
+.cart-info {
+    margin: 0px 15px;
+}
+
+.clear-btn {
+    background-color: #FF3030;
+}
+
+.review-btn {
+    background-color: #FF9900;
 }
