@@ -1,4 +1,15 @@
 .shop-container {
     display: grid;
-    grid-template-columns: 4fr 1fr;
+    grid-template-columns: 3fr 1fr;
+    gap: 35px;
+}
+
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 6%;
+}
+
+.cart-container {
+    background-color: rgba(255, 153, 0, 0.3);
 }

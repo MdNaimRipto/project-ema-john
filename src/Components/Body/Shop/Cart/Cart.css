@@ -1,39 +1,31 @@
-.cart-container {
-    background-color: #FFE0B3;
-    width: 16rem;
-    height: 45rem;
+.cart {
+    padding-top: 15px;
+    text-align: center;
     position: sticky;
     top: 0;
 }
 
 .cart button {
     display: block;
-    margin: auto;
-    padding: 10px 0px;
     width: 80%;
-    cursor: pointer;
-    border: none;
+    margin: auto;
+    margin-bottom: 15px;
+    padding: 12px;
     border-radius: 4px;
-    margin-bottom: 20px;
+    border: none;
     color: #FFFFFF;
+    font-size: 14px;
+    cursor: pointer;
 }
 
 .cart button span {
-    margin-right: 8px;
+    margin-right: 6px;
 }
 
-.cart-header {
-    text-align: center;
-}
-
-.cart-info {
-    margin: 0px 15px;
-}
-
-.clear-btn {
+.clear-cart {
     background-color: #FF3030;
 }
 
-.review-btn {
+.review-order {
     background-color: #FF9900;
 }

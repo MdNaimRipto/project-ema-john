@@ -1,21 +1,47 @@
 import React, { useEffect, useState } from 'react';
+import { addToLocal, deleteCart, getStoredCart } from '../../../utilities/Local';
 import Cart from './Cart/Cart';
 import Product from './Product/Product';
 import "./Shop.css"
+import { useLoaderData } from "react-router-dom";
 
 const Shop = () => {
-    const [products, setProducts] = useState([]);
-    const [cartItem, setCartItem] = useState([]);
-    useEffect(() => {
-        fetch("products.json")
-            .then(res => res.json())
-            .then(data => setProducts(data))
-    }, [])
+    const products = useLoaderData()
+    const [cart, setCart] = useState([]);
 
-    const handleAddToCart = (product) => {
-        const newItem = [...cartItem, product];
-        setCartItem(newItem);
-    };
+    useEffect(() => {
+        const storedCart = getStoredCart();
+        const savedCart = [];
+        for (const id in storedCart) {
+            const addedProduct = products.find(product => product.id === id);
+            if (addedProduct) {
+                const quantity = storedCart[id];
+                addedProduct.quantity = quantity;
+                savedCart.push(addedProduct);
+            }
+        }
+        console.log(savedCart)
+        setCart(savedCart);
+    }, [products])
+    const handleAddToClick = (item) => {
+        let newItem = [];
+        const exists = products.find(product => product.id === item.id);
+        if (!exists) {
+            item.quantity = 1;
+            newItem = [...cart, item];
+        }
+        else {
+            const rest = products.filter(product => product.id !== item.id);
+            exists.quantity = exists.quantity + 1;
+            newItem = [...rest, exists]
+        }
+        setCart(newItem);
+        addToLocal(item.id)
+    }
+    const handleDelete = () => {
+        setCart([])
+        deleteCart()
+    }
     return (
         <div className='shop-container'>
             <div className='product-container'>
@@ -24,12 +50,15 @@ const Shop = () => {
                         <Product
                             key={product.id}
                             product={product}
-                            handleAddToCart={handleAddToCart}
+                            handleAddToClick={handleAddToClick}
                         ></Product>)
                 }
-            </div >
+            </div>
             <div className='cart-container'>
-                <Cart cartItem={cartItem}></Cart>
+                <Cart
+                    cart={cart}
+                    handleDelete={handleDelete}
+                ></Cart>
             </div>
         </div>
     );

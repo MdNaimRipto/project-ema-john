@@ -1,31 +1,36 @@
 import { faArrowRight, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { deleteCart } from '../../../../utilities/Local';
 import "./Cart.css"
 
 const Cart = (props) => {
-
-    const { cartItem } = props;
-    const price = cartItem.reduce((prev, current) => prev + current.price, 0);
-    const shippingCharge = cartItem.reduce((prev, current) => prev + current.shipping, 0);
+    const { cart, handleDelete } = props;
+    let quantity = 0;
+    let price = 0;
+    let shipping = 0;
+    for (const item of cart) {
+        quantity = quantity + item.quantity;
+        price = price + item.price * item.quantity;
+        shipping = shipping + item.shipping;
+    }
     const tax = parseFloat(((price * 10) / 100).toFixed(2));
-    const grandTotal = price + shippingCharge + tax;
-
+    const total = price + shipping + tax;
     return (
         <div className='cart'>
-            <h2 className='cart-header'>Order Summery</h2>
-            <div className='cart-info'>
-                <p>Selected Items: {cartItem.length}</p>
+            <h2>Order Summary</h2>
+            <div>
+                <p>Selected Item: {quantity}</p>
                 <p>Total price: ${price}</p>
-                <p>Total Shipping Charge: ${shippingCharge}</p>
+                <p>Total Shipping Charge: ${shipping}</p>
                 <p>Tax: ${tax}</p>
-                <h3>Grand Total: ${grandTotal}</h3>
             </div>
-            <button className='clear-btn'>
+            <h2>Grand Total: {total}</h2>
+            <button onClick={handleDelete} className='clear-cart'>
                 <span>Clear Cart</span>
                 <FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon>
             </button>
-            <button className='review-btn'>
+            <button className='review-order'>
                 <span>Review Order</span>
                 <FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon>
             </button>
